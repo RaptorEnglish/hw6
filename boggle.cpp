@@ -91,9 +91,39 @@ std::set<std::string> boggle(const std::set<std::string>& dict, const std::set<s
 	return result;
 }
 
-bool boggleHelper(const std::set<std::string>& dict, const std::set<std::string>& prefix, const std::vector<std::vector<char> >& board, 
-								   std::string word, std::set<std::string>& result, unsigned int r, unsigned int c, int dr, int dc)
+bool boggleHelper(const std::set<std::string>& dict, const std::set<std::string>& prefix, const std::vector<std::vector<char> >& board,
+                  std::string word, std::set<std::string>& result, unsigned int r, unsigned int c, int dr, int dc)
 {
-//add your solution here!
+    //add your solution here!
+//    int live = word == "AWEE";
+//    std::cout << word << std::endl;
 
+    // add word if made it to end of board
+    if (r >= board.size() || c >= board[0].size()) {
+        if (dict.find(word) != dict.end()) {
+            result.insert(word);
+//            std::cout << "adding: " << word << std::endl;
+            return true;
+        }
+        return false;
+    }
+
+    // break if word not in prefixes
+    if (prefix.find(word) == prefix.end()) {
+        return false;
+    }
+
+    // call again on next spot
+    bool check = boggleHelper(dict, prefix, board, word + board[r][c], result, r + dr, c + dc, dr, dc);
+    if (!check) {
+        if (dict.find(word) != dict.end()) {
+            result.insert(word);
+//            std::cout << "adding: " << word << std::endl;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    return true;
 }
