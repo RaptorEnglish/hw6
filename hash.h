@@ -23,7 +23,9 @@ struct MyStringHash {
         std::vector<HASH_INDEX_T> a(k.size());
         for (size_t i = 0; i < k.size(); i++) {
             a[k.size() - i - 1] = letterDigitToNumber(k[i]);
+            std::cout << letterDigitToNumber(k[i]) << " ";
         }
+        std::cout << std::endl;
 
         // create blocks of 6 and insert into 'w' with padding
         size_t block_size = 6;
@@ -39,7 +41,9 @@ struct MyStringHash {
         unsigned long long result = 0;
         for (size_t i = 0; i < w.size(); i++) {
             result += rValues[i] * w[i];
+            std::cout << "W: " << w[i] << std::endl;
         }
+        std::cout << std::endl;
 
         return result;
 
