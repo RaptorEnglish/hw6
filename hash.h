@@ -26,8 +26,8 @@ struct MyStringHash {
         }
 
         // create blocks of 6 and insert into 'w' with padding
-        int block_size = 6;
-        int max_size = 5;
+        size_t block_size = 6;
+        size_t max_size = 5;
         std::vector<unsigned long long> w(max_size);
         for (size_t i = 0; i < max_size; i++) {
             for (size_t j = 0; j < block_size; j++) {
