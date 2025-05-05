@@ -27,27 +27,30 @@ struct MyStringHash {
         std::vector<unsigned long long> a(k.size());
         for (size_t i = 0; i < k.size(); i++) {
             a[k.size() - i - 1] = letterDigitToNumber(k[i]);
-            std::cout << letterDigitToNumber(k[i]) << " ";
         }
-        std::cout << std::endl;
 
         // precompute powers of 36 from 0 to 5
         std::vector<unsigned long long> pow36(block_size, 1);
-        for (unsigned long long i = 1; i < block_size; ++i) {
+        for (size_t i = 1; i < block_size; ++i) {
             pow36[i] = pow36[i - 1] * 36;
         }
 
         // create blocks of 6 and insert into 'w' with padding
-        std::vector<unsigned long long> w(max_size);
-        for (unsigned long long i = 0; i < max_size; i++) {
-            for (unsigned long long j = 0; j < block_size; j++) {
-                w[w.size() - i - 1] += pow36[j] * a[(i * block_size) + j];
+        std::vector<unsigned long long> w(max_size, 0);
+        for (size_t i = 0; i < max_size; i++) {
+            for (size_t j = 0; j < block_size; j++) {
+                size_t index = (i * block_size) + j;
+                if (index < a.size()) {
+                    w[w.size() - i - 1] += pow36[j] * a[(i * block_size) + j];
+
+                }
             }
+
         }
 
         // multiply by random vector
         unsigned long long result = 0;
-        for (unsigned long long i = 0; i < w.size(); i++) {
+        for (size_t i = 0; i < w.size(); i++) {
             result += rValues[i] * w[i];
             std::cout << "W: " << w[i] << std::endl;
         }
