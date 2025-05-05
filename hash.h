@@ -52,9 +52,7 @@ struct MyStringHash {
         unsigned long long result = 0;
         for (size_t i = 0; i < w.size(); i++) {
             result += rValues[i] * w[i];
-            std::cout << "W: " << w[i] << std::endl;
         }
-        std::cout << std::endl;
 
         return result;
 
