@@ -351,10 +351,11 @@ void HashTable<K,V,Prober,Hash,KEqual>::insert(const ItemType& p)
 
     // convert key to hash
     HASH_INDEX_T loc = probe(p.first);
+//    std::cout << "loc: " << loc << static_cast<bool>(loc == npos) << std::endl;
 
-//    if (loc == npos) {
-//        throw std::logic_error("index error");
-//    }
+    if (loc == npos) {
+        throw std::logic_error("index error");
+    }
 
     // overwrite value
     if (table_[loc] != nullptr && kequal_(p.first, table_[loc]->item.first)) {

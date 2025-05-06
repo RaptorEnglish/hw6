@@ -10,14 +10,7 @@ using namespace std;
 
 void test1() {
     std::cout << "working" << std::endl;
-    LinearProber<int > lh;
-    HashTable<
-            int,
-            int,
-            LinearProber<int >,
-            std::hash<int>,
-            std::equal_to<int> > ht(0.4, lh);
-//    HashTable<int, int, LinearProber<int>, IntHash2, equal_to<int>> ht(2.0, LinearProber<int>(), IntHash2());
+    HashTable<int, int, LinearProber<int>, std::hash<int>, equal_to<int>> ht(2.0, LinearProber<int>());
     bool correctThrow = false;
     for(int i = 0; i<=11; i++){
         if (i < 11){
