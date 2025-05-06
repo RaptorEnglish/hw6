@@ -345,27 +345,27 @@ template<typename K, typename V, typename Prober, typename Hash, typename KEqual
 void HashTable<K,V,Prober,Hash,KEqual>::insert(const ItemType& p)
 {
     // check for resize
-    if ((table_size + num_deleted) / table_.size() > resize_thresh) {
-        resize();
-    }
-
-    // convert key to hash
-    HASH_INDEX_T loc = probe(p.first);
+//    if ((table_size + num_deleted) / table_.size() > resize_thresh) {
+//        resize();
+//    }
+//
+//    // convert key to hash
+//    HASH_INDEX_T loc = probe(p.first);
 
 //    if (loc == npos) {
 //        throw std::logic_error("index error");
 //    }
 
     // overwrite value
-    if (table_[loc] != nullptr && kequal_(p.first, table_[loc]->item.first)) {
-//        table_[loc]->item.second = p.second;
-
-    } else {
-        // create new value
-//        table_[loc] = new HashItem(p);
-//        table_size++;
-
-    }
+//    if (table_[loc] != nullptr && kequal_(p.first, table_[loc]->item.first)) {
+////        table_[loc]->item.second = p.second;
+//
+//    } else {
+//        // create new value
+////        table_[loc] = new HashItem(p);
+////        table_size++;
+//
+//    }
 
 }
 
