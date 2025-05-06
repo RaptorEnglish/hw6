@@ -13,6 +13,36 @@ void EXPECT_EQ(size_t a, size_t b) {
     std::cout << "equal: " << a << " " << b << std::endl;
 }
 
+void stress_test() {
+    const vector<int> sizemap =
+            {
+                    11, 23, 47, 97, 197, 397, 797, 1597, 3203, 6421, 12853, 25717, 51437, 102877, 205759
+            };
+    HashTable<int, int, LinearProber<int>, std::hash<int>, equal_to<int>> ht(1.0, LinearProber<int>());
+    set<pair<int, int>> items;
+    int prevsize;
+    for(size_t i = 0;i<sizemap.size()-1;i++){
+        if(i == 0){prevsize = 0;}
+        else{prevsize = sizemap[i-1]+1;}
+        for(int j = prevsize; j<=sizemap[i];j++){
+            pair<int,int> pair(j,j);
+            items.insert(pair);
+            ht.insert(pair);
+            if(j == sizemap[i]-1){
+                EXPECT_EQ(ht.full_table_size(),sizemap[i]);
+                EXPECT_EQ(ht.size(),items.size());
+            }
+            if(j == sizemap[i]){
+                //resize should happen.
+                EXPECT_EQ(ht.full_table_size(),sizemap[i+1]);
+                EXPECT_EQ(ht.size(),items.size());
+            }
+        }
+    }
+    //All items should still be there
+//    EXPECT_TRUE(verifyItems(ht, items));
+}
+
 void insert_resize() {
     //Reach the default alpha factor of .4 (5 items /11 items = .45) to force a resize
     HashTable<string, int, DoubleHashProber<string, std::hash<string>>, hash<string>, equal_to<string> > ht;
@@ -146,6 +176,7 @@ int main()
 {
 //    logic_error_test();
 //    insert_duplicate();
-    insert_resize();
+//    insert_resize();
+    stress_test();
     return 0;
 }

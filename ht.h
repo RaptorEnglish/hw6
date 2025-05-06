@@ -350,7 +350,7 @@ template<typename K, typename V, typename Prober, typename Hash, typename KEqual
 void HashTable<K,V,Prober,Hash,KEqual>::insert(const ItemType& p)
 {
     // check for resize
-    if (this->load_factor() > resize_thresh) {
+    if (this->load_factor() >= resize_thresh) {
         resize();
     }
 
