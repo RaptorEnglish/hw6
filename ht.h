@@ -318,7 +318,7 @@ template<typename K, typename V, typename Prober, typename Hash, typename KEqual
 bool HashTable<K,V,Prober,Hash,KEqual>::empty() const
 {
     for (size_t i = 0; i < table_.size(); i++) {
-        if (table_[i]->item != nullptr and !table_[i]->deleted) return false;
+        if (table_[i] != nullptr and !table_[i]->deleted) return false;
     }
     return true;
 }
