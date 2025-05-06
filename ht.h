@@ -278,6 +278,7 @@ private:
 
     // ADD MORE DATA MEMBERS HERE, AS NECESSARY
     size_t table_size = 0;
+    size_t num_deleted = 0;
     double resize_thresh = 0.5;
 
 };
@@ -344,7 +345,7 @@ template<typename K, typename V, typename Prober, typename Hash, typename KEqual
 void HashTable<K,V,Prober,Hash,KEqual>::insert(const ItemType& p)
 {
     // check for resize
-    if (table_size / table_.size() > resize_thresh) {
+    if ((table_size + num_deleted) / table_.size() > resize_thresh) {
         resize();
     }
 
@@ -378,7 +379,8 @@ void HashTable<K,V,Prober,Hash,KEqual>::remove(const KeyType& key)
 
     if (table_[loc] != nullptr) {
         table_[loc]->deleted = true;
-//        table_size--;
+        table_size--;
+        num_deleted++;
     }
 
 
@@ -455,16 +457,17 @@ typename HashTable<K,V,Prober,Hash,KEqual>::HashItem* HashTable<K,V,Prober,Hash,
 template<typename K, typename V, typename Prober, typename Hash, typename KEqual>
 void HashTable<K,V,Prober,Hash,KEqual>::resize()
 {
-    if (!(mIndex_ + 1 >= sizeof(CAPACITIES) / sizeof(HASH_INDEX_T))) {
-        mIndex_++;
-
-    }
+    mIndex_++;
+//    if (!(mIndex_ + 1 >= sizeof(CAPACITIES) / sizeof(HASH_INDEX_T))) {
+//
+//    }
 
     // create new table
     std::vector<HashItem*> temp_table = table_;
     table_.clear();
     table_.resize(CAPACITIES[mIndex_], nullptr);
     table_size = 0;
+    num_deleted = 0;
 
     // insert values
     for (size_t i = 0; i < temp_table.size(); i++) {
