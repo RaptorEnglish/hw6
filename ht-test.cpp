@@ -6,9 +6,38 @@
 #include <string>
 #include <sstream>
 #include <functional>
+#include <set>
 using namespace std;
 
-void test1() {
+void insert_duplicate() {
+    HashTable<string, int, LinearProber<string>, hash<string>, equal_to<string> > ht;
+    std::set<pair<string, int>> items;
+    //Insert (one, 1)
+    pair<string, int> pair1("one", 1);
+    ht.insert(pair1);
+    items.insert(pair1);
+    ht.reportAll(std::cout);
+    std::cout << "----" << std::endl;
+//    EXPECT_TRUE(verifyItems(ht, items));
+    //Insert (two, 2)
+    pair<string, int> pair2("two", 2);
+    ht.insert(pair2);
+    items.insert(pair2);
+    ht.reportAll(std::cout);
+    std::cout << "----" << std::endl;
+
+//    EXPECT_TRUE(verifyItems(ht, items));
+    pair<string, int> pair1dup("one", 3);
+    ht.insert(pair1dup);
+    items.erase(pair1);
+    items.insert(pair1dup);
+    ht.reportAll(std::cout);
+    std::cout << "----" << std::endl;
+    
+//    EXPECT_TRUE(verifyItems(ht, items));
+}
+
+void logic_error_test() {
     std::cout << "working" << std::endl;
     HashTable<int, int, LinearProber<int>, std::hash<int>, equal_to<int>> ht(2.0, LinearProber<int>());
     bool correctThrow = false;
@@ -31,6 +60,8 @@ void test1() {
             }
         }
     }
+    std::cout << "throw true: " << correctThrow << std::endl;
+    std::cout << "size: " << ht.size() << std::endl;
 }
 
 void test0() {
@@ -83,6 +114,7 @@ void test0() {
 
 int main()
 {
-    test1();
+//    logic_error_test();
+    insert_duplicate();
     return 0;
 }
