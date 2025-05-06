@@ -217,6 +217,8 @@ public:
 
     size_t full_table_size() { return table_.size(); }
 
+    double load_factor() { return (double)(table_size + num_deleted) / (double)table_.size(); }
+
     /**
      * @brief Returns the value corresponding to the given key
      * 
@@ -348,7 +350,7 @@ template<typename K, typename V, typename Prober, typename Hash, typename KEqual
 void HashTable<K,V,Prober,Hash,KEqual>::insert(const ItemType& p)
 {
     // check for resize
-    if ((table_size + num_deleted) / table_.size() > resize_thresh) {
+    if (this->load_factor() > resize_thresh) {
         resize();
     }
 

@@ -23,6 +23,8 @@ void insert_resize() {
     items.insert(newItem);
     }
     EXPECT_EQ(ht.full_table_size(), 11);
+    std::cout << ht.load_factor() << std::endl;
+    std::cout << "----" << std::endl;
 
     //add another item should resize
     pair<string,int> newItem(to_string(5),5);
@@ -30,7 +32,11 @@ void insert_resize() {
     items.insert(newItem);
     EXPECT_EQ(ht.full_table_size(), 23);
     //check that all the items are still there
+    ht.reportAll(std::cout);
 //    EXPECT_TRUE(verifyItems(ht, items));
+    std::cout << ht.load_factor() << std::endl;
+    std::cout << "----" << std::endl;
+
 }
 
 void insert_duplicate() {
