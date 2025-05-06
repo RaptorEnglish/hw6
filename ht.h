@@ -351,8 +351,8 @@ void HashTable<K,V,Prober,Hash,KEqual>::insert(const ItemType& p)
     // convert key to hash
     HASH_INDEX_T loc = probe(p.first);
 
-    if (loc == this->npos) {
-        throw std::runtime_error("index error");
+    if (loc == npos) {
+        throw std::logic_error("index error");
     }
 
     // overwrite value
@@ -378,7 +378,7 @@ void HashTable<K,V,Prober,Hash,KEqual>::remove(const KeyType& key)
 
     if (table_[loc] != nullptr) {
         table_[loc]->deleted = true;
-        table_size--;
+//        table_size--;
     }
 
 
