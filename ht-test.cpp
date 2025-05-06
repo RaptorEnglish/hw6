@@ -9,6 +9,30 @@
 #include <set>
 using namespace std;
 
+void EXPECT_EQ(size_t a, size_t b) {
+    std::cout << "equal: " << a << " " << b << std::endl;
+}
+
+void insert_resize() {
+    //Reach the default alpha factor of .4 (5 items /11 items = .45) to force a resize
+    HashTable<string, int, DoubleHashProber<string, std::hash<string>>, hash<string>, equal_to<string> > ht;
+    set<pair<string, int>> items;
+    for(int i = 0; i < 5; i++) {
+    pair<string, int> newItem(to_string(i), i);
+    ht.insert(newItem);
+    items.insert(newItem);
+    }
+    EXPECT_EQ(ht.full_table_size(), 11);
+
+    //add another item should resize
+    pair<string,int> newItem(to_string(5),5);
+    ht.insert(newItem);
+    items.insert(newItem);
+    EXPECT_EQ(ht.full_table_size(), 23);
+    //check that all the items are still there
+//    EXPECT_TRUE(verifyItems(ht, items));
+}
+
 void insert_duplicate() {
     HashTable<string, int, LinearProber<string>, hash<string>, equal_to<string> > ht;
     std::set<pair<string, int>> items;
@@ -33,7 +57,7 @@ void insert_duplicate() {
     items.insert(pair1dup);
     ht.reportAll(std::cout);
     std::cout << "----" << std::endl;
-    
+
 //    EXPECT_TRUE(verifyItems(ht, items));
 }
 
@@ -115,6 +139,7 @@ void test0() {
 int main()
 {
 //    logic_error_test();
-    insert_duplicate();
+//    insert_duplicate();
+    insert_resize();
     return 0;
 }

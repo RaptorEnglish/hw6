@@ -215,6 +215,8 @@ public:
     ItemType const * find(const KeyType& key) const;
     ItemType * find(const KeyType& key);
 
+    size_t full_table_size() { return table_.size(); }
+
     /**
      * @brief Returns the value corresponding to the given key
      * 
@@ -264,6 +266,7 @@ private:
      * @throws std::logic_error if no more CAPACITIES exist
      */
     void resize();
+
 
     // Data members
     std::vector<HashItem*> table_; // actual hash table
