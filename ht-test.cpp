@@ -7,16 +7,48 @@
 #include <sstream>
 #include <functional>
 using namespace std;
-int main()
-{
+
+void test1() {
+    std::cout << "working" << std::endl;
+    LinearProber<int > lh;
+    HashTable<
+            int,
+            int,
+            LinearProber<int >,
+            std::hash<int>,
+            std::equal_to<int> > ht(0.4, lh);
+//    HashTable<int, int, LinearProber<int>, IntHash2, equal_to<int>> ht(2.0, LinearProber<int>(), IntHash2());
+    bool correctThrow = false;
+    for(int i = 0; i<=11; i++){
+        if (i < 11){
+            pair<int,int> pair(i,i);
+            ht.insert(pair);
+        }
+        else{
+            //collision will occur at i == 11 (11 mod 11 = 0)
+            try{
+                pair<int,int> pair(i,i);
+                ht.insert(pair);
+            }
+            catch(std::logic_error const & err){
+                correctThrow = true;
+            }
+            catch(...) {
+                correctThrow = false;
+            }
+        }
+    }
+}
+
+void test0() {
     DoubleHashProber<std::string, MyStringHash > dh;
     LinearProber<std::string > lh;
     HashTable<
-        std::string,
-        int,
-        DoubleHashProber<std::string, MyStringHash >,
-        std::hash<std::string>,
-        std::equal_to<std::string> > ht(0.7, dh);
+            std::string,
+            int,
+            DoubleHashProber<std::string, MyStringHash >,
+            std::hash<std::string>,
+            std::equal_to<std::string> > ht(0.7, dh);
 //    HashTable<
 //        std::string,
 //        int,
@@ -24,7 +56,7 @@ int main()
 //        std::hash<std::string>,
 //        std::equal_to<std::string> > ht(0.7, lh);
 
-    // This is just arbitrary code. Change it to test whatever you like about your 
+    // This is just arbitrary code. Change it to test whatever you like about your
     // hash table implementation.
     for(size_t i = 0; i < 10; i++){
         std::stringstream ss;
@@ -53,5 +85,11 @@ int main()
     }
     ht.insert({"hi7",17});
     cout << "size: " << ht.size() << endl;
+}
+
+
+int main()
+{
+    test1();
     return 0;
 }

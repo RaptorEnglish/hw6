@@ -357,16 +357,13 @@ void HashTable<K,V,Prober,Hash,KEqual>::insert(const ItemType& p)
 //    }
 
     // overwrite value
-    if (loc != npos) {
-        if (table_[loc] != nullptr && kequal_(p.first, table_[loc]->item.first)) {
-            table_[loc]->item.second = p.second;
+    if (table_[loc] != nullptr && kequal_(p.first, table_[loc]->item.first)) {
+//        table_[loc]->item.second = p.second;
 
-        } else {
-            // create new value
-            table_[loc] = new HashItem(p);
-            table_size++;
-
-        }
+    } else {
+        // create new value
+//        table_[loc] = new HashItem(p);
+//        table_size++;
 
     }
 
