@@ -10,12 +10,19 @@ using namespace std;
 int main()
 {
     DoubleHashProber<std::string, MyStringHash > dh;
+    LinearProber<std::string > lh;
+//    HashTable<
+//        std::string,
+//        int,
+//        DoubleHashProber<std::string, MyStringHash >,
+//        std::hash<std::string>,
+//        std::equal_to<std::string> > ht(0.7, dh);
     HashTable<
-        std::string, 
-        int, 
-        DoubleHashProber<std::string, MyStringHash >, 
-        std::hash<std::string>, 
-        std::equal_to<std::string> > ht(0.7, dh);
+        std::string,
+        int,
+        LinearProber<std::string >,
+        std::hash<std::string>,
+        std::equal_to<std::string> > ht(0.7, lh);
 
     // This is just arbitrary code. Change it to test whatever you like about your 
     // hash table implementation.
@@ -24,11 +31,13 @@ int main()
         ss << "hi" << i;
         ht.insert({ss.str(), i});
     }
+//    ht.reportAll(std::cout);
     if( ht.find("hi1") != nullptr ){
         cout << "Found hi1" << endl;
         ht["hi1"] += 1;
         cout << "Incremented hi1's value to: " << ht["hi1"] << endl;
     }
+//    return 0;
     if( ht.find("doesnotexist") == nullptr ){
         cout << "Did not find: doesnotexist" << endl;
     }
