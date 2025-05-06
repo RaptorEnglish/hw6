@@ -105,7 +105,6 @@ public:
     HASH_INDEX_T next() 
     {
 
-
         if( this->numProbes_ >= this->m_ ) {  // TODO check
             return this->npos;
         }
@@ -464,11 +463,11 @@ typename HashTable<K,V,Prober,Hash,KEqual>::HashItem* HashTable<K,V,Prober,Hash,
 template<typename K, typename V, typename Prober, typename Hash, typename KEqual>
 void HashTable<K,V,Prober,Hash,KEqual>::resize()
 {
-    std::cout << "resizing" << std::endl;
     // create new table
     mIndex_++;
     std::vector<HashItem*> temp_table = table_;
     table_ = std::vector<HashItem*>(CAPACITIES[mIndex_]);
+    table_size = 0;
 
     // insert values
     for (size_t i = 0; i < temp_table.size(); i++) {
@@ -477,6 +476,7 @@ void HashTable<K,V,Prober,Hash,KEqual>::resize()
                 delete temp_table[i];
             } else {
                 insert(temp_table[i]->item);
+                table_size++;
             }
         }
     }
