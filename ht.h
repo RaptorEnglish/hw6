@@ -452,14 +452,15 @@ typename HashTable<K,V,Prober,Hash,KEqual>::HashItem* HashTable<K,V,Prober,Hash,
 template<typename K, typename V, typename Prober, typename Hash, typename KEqual>
 void HashTable<K,V,Prober,Hash,KEqual>::resize()
 {
+    if (!(mIndex_ + 1 >= sizeof(CAPACITIES) / sizeof(HASH_INDEX_T))) {
+        mIndex_++;
+
+    }
     // create new table
-    mIndex_++;
     std::vector<HashItem*> temp_table = table_;
     table_.clear();
     table_.resize(CAPACITIES[mIndex_], nullptr);
     table_size = 0;
-
-
 
     // insert values
     for (size_t i = 0; i < temp_table.size(); i++) {
