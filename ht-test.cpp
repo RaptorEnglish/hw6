@@ -11,18 +11,18 @@ int main()
 {
     DoubleHashProber<std::string, MyStringHash > dh;
     LinearProber<std::string > lh;
-//    HashTable<
-//        std::string,
-//        int,
-//        DoubleHashProber<std::string, MyStringHash >,
-//        std::hash<std::string>,
-//        std::equal_to<std::string> > ht(0.7, dh);
     HashTable<
         std::string,
         int,
-        LinearProber<std::string >,
+        DoubleHashProber<std::string, MyStringHash >,
         std::hash<std::string>,
-        std::equal_to<std::string> > ht(0.7, lh);
+        std::equal_to<std::string> > ht(0.7, dh);
+//    HashTable<
+//        std::string,
+//        int,
+//        LinearProber<std::string >,
+//        std::hash<std::string>,
+//        std::equal_to<std::string> > ht(0.7, lh);
 
     // This is just arbitrary code. Change it to test whatever you like about your 
     // hash table implementation.

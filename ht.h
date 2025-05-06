@@ -59,6 +59,7 @@ struct DoubleHashProber : public Prober<KeyType>
     //==================================
     // Add data members, as desired
     //==================================
+    KeyType key_;
 
 private:
     // Complete
@@ -97,13 +98,31 @@ public:
         HASH_INDEX_T modulus = findModulusToUseFromTableSize(m);
         // Compute probe stepsize given modulus and h2(k) 
         dhstep_ = modulus - h2_(key) % modulus;
+        key_ = key;
     }
 
     // To be completed
     HASH_INDEX_T next() 
     {
 
-        std::cout << "double hashing " << std::endl;
+
+        if( this->numProbes_ >= this->m_ ) {  // TODO check
+            return this->npos;
+        }
+        HASH_INDEX_T loc = (this->start_ + this->numProbes_ * h2_(key_)) % this->m_;
+        this->numProbes_++;
+        return loc;
+
+//        if( this->numProbes_ >= this->m_ ) {  // TODO check
+//            return this->npos;
+//        }
+////        HASH_INDEX_T loc = (this->start_ + this->numProbes_) % this->m_;
+//        HASH_INDEX_T loc = this->start_;
+//        for (size_t i = 0; i < this->numProbes_; i++) {
+//            loc = h2_(loc + this->dhstep_);
+//        }
+//        this->numProbes_++;
+//        return loc;
 
     }
 };
