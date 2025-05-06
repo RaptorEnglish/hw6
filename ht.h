@@ -455,8 +455,11 @@ void HashTable<K,V,Prober,Hash,KEqual>::resize()
     // create new table
     mIndex_++;
     std::vector<HashItem*> temp_table = table_;
-    table_ = std::vector<HashItem*>(CAPACITIES[mIndex_]);
+    table_.clear();
+    table_.resize(CAPACITIES[mIndex_], nullptr);
     table_size = 0;
+
+
 
     // insert values
     for (size_t i = 0; i < temp_table.size(); i++) {
@@ -465,12 +468,10 @@ void HashTable<K,V,Prober,Hash,KEqual>::resize()
                 delete temp_table[i];
             } else {
                 insert(temp_table[i]->item);
+                delete temp_table[i];
             }
         }
     }
-
-    // update table
-//    delete temp_table;
 
     
 }
