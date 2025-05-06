@@ -108,20 +108,9 @@ public:
         if( this->numProbes_ >= this->m_ ) {  // TODO check
             return this->npos;
         }
-        HASH_INDEX_T loc = (this->start_ + this->numProbes_ * h2_(key_)) % this->m_;
+        HASH_INDEX_T loc = (this->start_ + this->numProbes_ * dhstep_) % this->m_;
         this->numProbes_++;
         return loc;
-
-//        if( this->numProbes_ >= this->m_ ) {  // TODO check
-//            return this->npos;
-//        }
-////        HASH_INDEX_T loc = (this->start_ + this->numProbes_) % this->m_;
-//        HASH_INDEX_T loc = this->start_;
-//        for (size_t i = 0; i < this->numProbes_; i++) {
-//            loc = h2_(loc + this->dhstep_);
-//        }
-//        this->numProbes_++;
-//        return loc;
 
     }
 };
@@ -476,7 +465,6 @@ void HashTable<K,V,Prober,Hash,KEqual>::resize()
                 delete temp_table[i];
             } else {
                 insert(temp_table[i]->item);
-                table_size++;
             }
         }
     }
